@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B964026D-E59E-46CE-8B42-6184078EEA08</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Commander</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>959D58934ED394AEB685AAEDAFBBEFA8ADF44B06</key>
+		<string>https://github.com/rmacey/commander.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Commander/Commander.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>959D58934ED394AEB685AAEDAFBBEFA8ADF44B06</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rmacey/commander.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>959D58934ED394AEB685AAEDAFBBEFA8ADF44B06</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>959D58934ED394AEB685AAEDAFBBEFA8ADF44B06</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Commander</string>
+		</dict>
+	</array>
+</dict>
+</plist>
