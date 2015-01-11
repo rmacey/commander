@@ -22,5 +22,18 @@ static int numberOfPlayers = 0;
     return numberOfPlayers;
 }
 
+-(id)init
+{
+   self = [super init];
+    if(self)
+    {
+        self.games = [[NSMutableArray alloc]  init];
+        self.decks = [[NSMutableArray alloc]  init];
+        self.salty = [[NSNumber alloc] initWithDouble:0.0];
+        
+    }
+    return self;
+}
+
 
 @end

@@ -11,7 +11,9 @@
 
 @interface PlayerDetailViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) Player *player;
+//@property (weak, nonatomic) Player *player;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIViewController *currentViewController;
 
 @end

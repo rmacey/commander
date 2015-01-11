@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PlayerDetailViewController.h"
 
-@interface PlayersViewController : UIViewController
+@interface PlayersViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *playersTable;
 

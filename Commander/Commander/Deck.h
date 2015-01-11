@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *name;
 
+
 + (int) totalDecks;
 +(Deck *) newAlloc;
 

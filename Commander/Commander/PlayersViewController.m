@@ -8,12 +8,13 @@
 
 #import "PlayersViewController.h"
 #import "Player.h"
+#import "DataController.h"
 
 
 @interface PlayersViewController () <UIAlertViewDelegate>
 {
     UIRefreshControl *refreshControl;
-    NSMutableArray		* _players;
+    //NSMutableArray		* _players;
     UILabel *noPlayersLabel;
 }
 
@@ -25,16 +26,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    _players = [[NSMutableArray alloc] init];
+    //_players = [[NSMutableArray alloc] init];
     
     
-    UITableViewController *tableViewController = [[UITableViewController alloc] init];
-    tableViewController.tableView = self.playersTable;
-    
-    refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refreshPlayers) forControlEvents:UIControlEventValueChanged];
-    tableViewController.refreshControl = refreshControl;
-    refreshControl.tintColor = [UIColor colorWithRed:(254/255.0) green:(153/255.0) blue:(0/255.0) alpha:1];
+//    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+//    tableViewController.tableView = self.playersTable;
+//    
+//    refreshControl = [[UIRefreshControl alloc] init];
+//    [refreshControl addTarget:self action:@selector(refreshPlayers) forControlEvents:UIControlEventValueChanged];
+//    tableViewController.refreshControl = refreshControl;
+//    refreshControl.tintColor = [UIColor colorWithRed:(254/255.0) green:(153/255.0) blue:(0/255.0) alpha:1];
     
 }
 
@@ -46,18 +47,21 @@
 #pragma mark - Table View Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if([Player totalPlayers] == 0)
-    {
-        noPlayersLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.playersTable.bounds.size.width, self.playersTable.bounds.size.height)];
-        noPlayersLabel.text = @"No Players found. Please pull down to refresh.";
-        noPlayersLabel.textColor = [UIColor blackColor];
-        noPlayersLabel.numberOfLines = 0;
-        noPlayersLabel.textAlignment = NSTextAlignmentCenter;
-        noPlayersLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
-        [noPlayersLabel sizeToFit];
-        
+    DataController *dataController = [DataController sharedDataController];
+    NSMutableArray *players = [dataController getPlayers];
 
-        noPlayersLabel.hidden = NO;
+    if([players count] == 0)
+    {
+//        noPlayersLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.playersTable.bounds.size.width, self.playersTable.bounds.size.height)];
+//        noPlayersLabel.text = @"No Players found. Please pull down to refresh.";
+//        noPlayersLabel.textColor = [UIColor blackColor];
+//        noPlayersLabel.numberOfLines = 0;
+//        noPlayersLabel.textAlignment = NSTextAlignmentCenter;
+//        noPlayersLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+//        [noPlayersLabel sizeToFit];
+//        
+//
+//        noPlayersLabel.hidden = NO;
         self.playersTable.hidden = YES;
         return 0;
     }
@@ -71,22 +75,28 @@
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [Player totalPlayers];
+    DataController *dataController = [DataController sharedDataController];
+    NSMutableArray *players = [dataController getPlayers];
+    return [players count];
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    Player *playerForCell = [_players objectAtIndex:indexPath.row];
+    DataController *dataController = [DataController sharedDataController];
+    NSMutableArray *players = [dataController getPlayers];
+    
+    Player *playerForCell = [players objectAtIndex:indexPath.row];
     
     cell.textLabel.text = playerForCell.name;
-    
-    //    Singleton *sharedManager = [Singleton sharedManager];
-    //    cell.textLabel.text = [[[sharedManager.birdDict objectForKey:_group] objectAtIndex:indexPath.row] objectForKey:@"comName"];
+    NSString *playerDetails = [NSString stringWithFormat:@"%lu decks  |  %lu games  |  %@%% salty", (unsigned long)[playerForCell.decks count], (unsigned long)[playerForCell.games count], playerForCell.salty];
+    cell.detailTextLabel.text = playerDetails;
+
     
     return cell;
 }
@@ -120,7 +130,10 @@
     {
         Player *newPlayer = [[Player newAlloc] init];
         newPlayer.name = [alertView textFieldAtIndex:0].text;
-        [_players addObject:newPlayer];
+        
+        DataController *dataController = [DataController sharedDataController];
+
+        [dataController addPlayer:newPlayer];
         [self refreshPlayers];
     }
 }
@@ -128,7 +141,7 @@
 - (void)refreshPlayers{
     
     [self.playersTable reloadData];
-    [refreshControl endRefreshing];
+  //  [refreshControl endRefreshing];
 }
 
 
@@ -137,11 +150,18 @@
 {
     if ([[segue identifier] isEqualToString:@"viewPlayer"])
     {
+        DataController *dataController = [DataController sharedDataController];
+        NSMutableArray *players = [dataController getPlayers];
         NSIndexPath *senderPath = sender;
-        [[segue destinationViewController] setPlayer:[_players objectAtIndex:senderPath.row]];
+        [dataController setSelectedPlayer:[players objectAtIndex:senderPath.row]];
+        
+        
+//        NSMutableArray *players = [dataController getPlayers];
+//    
+//        NSIndexPath *senderPath = sender;
+//        [[segue destinationViewController] setPlayer:[players objectAtIndex:senderPath.row]];
     
-//        // set delegate so addSighting can tell bird detail to refresh list
-//        [[segue destinationViewController] setDelegate:self];
+
     }
 }
 

@@ -10,7 +10,10 @@
 
 @interface Player : NSObject
 
-@property (strong, nonatomic) NSString *name;
+@property (weak, nonatomic) NSString *name;
+@property (strong, nonatomic) NSNumber *salty;
+@property (strong, nonatomic) NSMutableArray *games;
+@property (strong, nonatomic) NSMutableArray *decks;
 
 + (int) totalPlayers;
 + (Player *) newAlloc;
